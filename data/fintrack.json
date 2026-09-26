@@ -1,0 +1,168 @@
+{
+  "users": [
+    {
+      "_id": "usr_demo_882049281",
+      "name": "Rahul Sharma",
+      "email": "demo@fintrack.app",
+      "password": "$2b$10$sPloqws/rUGCCRCjtNyAU.Mz4GZ7lzOOpcR0Q2ffXggzrLIFUh0kG",
+      "createdAt": "2026-08-27T11:35:25.735Z"
+    }
+  ],
+  "transactions": [
+    {
+      "_id": "tx_demo_01",
+      "userId": "usr_demo_882049281",
+      "title": "Monthly Salary",
+      "amount": 65000,
+      "type": "income",
+      "category": "Salary",
+      "date": "2026-09-01",
+      "paymentMethod": "Bank Transfer",
+      "description": "Tech corp software engineer salary",
+      "createdAt": "2026-09-01T11:35:25.735Z"
+    },
+    {
+      "_id": "tx_demo_02",
+      "userId": "usr_demo_882049281",
+      "title": "Apartment Rent",
+      "amount": 18000,
+      "type": "expense",
+      "category": "Bills",
+      "date": "2026-09-02",
+      "paymentMethod": "UPI",
+      "description": "Monthly flat rent payment",
+      "createdAt": "2026-09-02T11:35:25.735Z"
+    },
+    {
+      "_id": "tx_demo_03",
+      "userId": "usr_demo_882049281",
+      "title": "Grocery Supermarket",
+      "amount": 4250,
+      "type": "expense",
+      "category": "Food",
+      "date": "2026-09-08",
+      "paymentMethod": "Card",
+      "description": "Monthly groceries, dairy and produce",
+      "createdAt": "2026-09-08T11:35:25.735Z"
+    },
+    {
+      "_id": "tx_demo_04",
+      "userId": "usr_demo_882049281",
+      "title": "Freelance Web Design",
+      "amount": 15000,
+      "type": "income",
+      "category": "Freelancing",
+      "date": "2026-09-11",
+      "paymentMethod": "Bank Transfer",
+      "description": "Frontend landing page contract for local cafe",
+      "createdAt": "2026-09-11T11:35:25.735Z"
+    },
+    {
+      "_id": "tx_demo_05",
+      "userId": "usr_demo_882049281",
+      "title": "Electric & Wi-Fi Bill",
+      "amount": 2400,
+      "type": "expense",
+      "category": "Bills",
+      "date": "2026-09-14",
+      "paymentMethod": "UPI",
+      "description": "Fiber internet and electricity",
+      "createdAt": "2026-09-14T11:35:25.735Z"
+    },
+    {
+      "_id": "tx_demo_06",
+      "userId": "usr_demo_882049281",
+      "title": "Metro & Cab Travel",
+      "amount": 1850,
+      "type": "expense",
+      "category": "Transport",
+      "date": "2026-09-18",
+      "paymentMethod": "UPI",
+      "description": "Commute cards recharge and Uber",
+      "createdAt": "2026-09-18T11:35:25.735Z"
+    },
+    {
+      "_id": "tx_demo_07",
+      "userId": "usr_demo_882049281",
+      "title": "Dinner with College Friends",
+      "amount": 2200,
+      "type": "expense",
+      "category": "Food",
+      "date": "2026-09-21",
+      "paymentMethod": "Card",
+      "description": "Weekend get-together dinner",
+      "createdAt": "2026-09-21T11:35:25.735Z"
+    },
+    {
+      "_id": "tx_demo_08",
+      "userId": "usr_demo_882049281",
+      "title": "Udemy Web Dev Course",
+      "amount": 899,
+      "type": "expense",
+      "category": "Education",
+      "date": "2026-09-23",
+      "paymentMethod": "Card",
+      "description": "Advanced TypeScript & Node.js masterclass",
+      "createdAt": "2026-09-23T11:35:25.736Z"
+    },
+    {
+      "_id": "tx_demo_09",
+      "userId": "usr_demo_882049281",
+      "title": "Cinema & Snacks",
+      "amount": 950,
+      "type": "expense",
+      "category": "Entertainment",
+      "date": "2026-09-25",
+      "paymentMethod": "UPI",
+      "description": "Movie weekend ticket and popcorn",
+      "createdAt": "2026-09-25T11:35:25.736Z"
+    }
+  ],
+  "budgets": [
+    {
+      "_id": "bg_demo_01",
+      "userId": "usr_demo_882049281",
+      "category": "Food",
+      "amount": 8000,
+      "month": 9,
+      "year": 2026,
+      "createdAt": "2026-09-01T11:35:25.736Z"
+    },
+    {
+      "_id": "bg_demo_02",
+      "userId": "usr_demo_882049281",
+      "category": "Bills",
+      "amount": 22000,
+      "month": 9,
+      "year": 2026,
+      "createdAt": "2026-09-01T11:35:25.736Z"
+    },
+    {
+      "_id": "bg_demo_03",
+      "userId": "usr_demo_882049281",
+      "category": "Transport",
+      "amount": 3000,
+      "month": 9,
+      "year": 2026,
+      "createdAt": "2026-09-01T11:35:25.736Z"
+    },
+    {
+      "_id": "bg_demo_04",
+      "userId": "usr_demo_882049281",
+      "category": "Entertainment",
+      "amount": 2500,
+      "month": 9,
+      "year": 2026,
+      "createdAt": "2026-09-01T11:35:25.736Z"
+    },
+    {
+      "_id": "bg_demo_05",
+      "userId": "usr_demo_882049281",
+      "category": "Shopping",
+      "amount": 5000,
+      "month": 9,
+      "year": 2026,
+      "createdAt": "2026-09-01T11:35:25.736Z"
+    }
+  ]
+}
