@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/User.js';
-import { AuthRequest } from '../middleware/authMiddleware.js';
+import { User } from '../models/User.ts';
+import { type AuthRequest } from '../middleware/authMiddleware.ts';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fintrack_super_secret_jwt_key_2026';
 

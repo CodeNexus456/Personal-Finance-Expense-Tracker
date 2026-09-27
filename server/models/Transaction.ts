@@ -1,4 +1,4 @@
-import { db, ITransaction } from '../config/db.js';
+import { db, type ITransaction } from '../config/db.ts';
 
 export type { ITransaction };
 

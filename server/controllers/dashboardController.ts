@@ -1,7 +1,7 @@
-import { Response } from 'express';
-import { Transaction } from '../models/Transaction.js';
-import { Budget } from '../models/Budget.js';
-import { AuthRequest } from '../middleware/authMiddleware.js';
+import type { Response } from 'express';
+import { Transaction } from '../models/Transaction.ts';
+import { Budget } from '../models/Budget.ts';
+import { type AuthRequest } from '../middleware/authMiddleware.ts';
 
 export const getDashboardStats = async (req: AuthRequest, res: Response) => {
   try {

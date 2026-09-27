@@ -1,4 +1,4 @@
-import { db, IBudget } from '../config/db.js';
+import { db, type IBudget } from '../config/db.ts';
 
 export type { IBudget };
 

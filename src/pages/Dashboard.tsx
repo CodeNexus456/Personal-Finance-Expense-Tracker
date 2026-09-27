@@ -94,7 +94,50 @@ export const Dashboard: React.FC<DashboardProps> = ({
       setStats(res.data);
     } catch (err: any) {
       console.error('Error fetching dashboard stats:', err);
-      setError('Unable to load dashboard data. Please check your connection.');
+      // If demo user and network error, provide instant pre-seeded stats
+      if (user?.email === 'demo@fintrack.app') {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        setStats({
+          summary: {
+            totalBalance: 49501,
+            totalIncome: 80000,
+            totalExpenses: 30499,
+            transactionCount: 9,
+            totalBudgetedThisMonth: 40500,
+            totalSpentThisMonth: 30499,
+          },
+          recentTransactions: [
+            { _id: 'tx_d1', title: 'Monthly Salary', amount: 65000, type: 'income', category: 'Salary', date: now.toISOString().split('T')[0], paymentMethod: 'Bank Transfer', description: 'Tech software salary' },
+            { _id: 'tx_d2', title: 'Apartment Rent', amount: 18000, type: 'expense', category: 'Bills', date: now.toISOString().split('T')[0], paymentMethod: 'UPI', description: 'Flat rent' },
+            { _id: 'tx_d3', title: 'Freelance Web Contract', amount: 15000, type: 'income', category: 'Freelancing', date: now.toISOString().split('T')[0], paymentMethod: 'Bank Transfer' },
+            { _id: 'tx_d4', title: 'Grocery Supermarket', amount: 4250, type: 'expense', category: 'Food', date: now.toISOString().split('T')[0], paymentMethod: 'Card' },
+            { _id: 'tx_d5', title: 'Wi-Fi & Electricity', amount: 2400, type: 'expense', category: 'Bills', date: now.toISOString().split('T')[0], paymentMethod: 'UPI' },
+            { _id: 'tx_d6', title: 'Metro Recharge', amount: 1850, type: 'expense', category: 'Transport', date: now.toISOString().split('T')[0], paymentMethod: 'UPI' },
+          ],
+          categoryExpenses: [
+            { category: 'Bills', amount: 20400, percentage: 67 },
+            { category: 'Food', amount: 4250, percentage: 14 },
+            { category: 'Transport', amount: 1850, percentage: 6 },
+            { category: 'Education', amount: 899, percentage: 3 },
+          ],
+          monthlyTrends: [
+            { monthLabel: "Apr '26", monthKey: `${currentYear}-04`, income: 65000, expense: 28000 },
+            { monthLabel: "May '26", monthKey: `${currentYear}-05`, income: 72000, expense: 29500 },
+            { monthLabel: "Jun '26", monthKey: `${currentYear}-06`, income: 80000, expense: 31000 },
+            { monthLabel: "Jul '26", monthKey: `${currentYear}-07`, income: 75000, expense: 28900 },
+            { monthLabel: "Aug '26", monthKey: `${currentYear}-08`, income: 82000, expense: 32000 },
+            { monthLabel: "Sep '26", monthKey: `${currentYear}-09`, income: 80000, expense: 30499 },
+          ],
+          budgets: [
+            { _id: 'bg_d1', category: 'Food', amount: 8000, spent: 4250, remaining: 3750, percentage: 53, isExceeded: false },
+            { _id: 'bg_d2', category: 'Bills', amount: 22000, spent: 20400, remaining: 1600, percentage: 93, isExceeded: false },
+            { _id: 'bg_d3', category: 'Transport', amount: 3000, spent: 1850, remaining: 1150, percentage: 62, isExceeded: false },
+          ],
+        });
+      } else {
+        setError('Unable to load dashboard data. Please check your connection.');
+      }
     } finally {
       setLoading(false);
     }

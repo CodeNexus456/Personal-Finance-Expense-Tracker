@@ -1,10 +1,9 @@
 import express from 'express';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
-import authRoutes from './server/routes/authRoutes.js';
-import transactionRoutes from './server/routes/transactionRoutes.js';
-import budgetRoutes from './server/routes/budgetRoutes.js';
-import dashboardRoutes from './server/routes/dashboardRoutes.js';
+import authRoutes from './server/routes/authRoutes.ts';
+import transactionRoutes from './server/routes/transactionRoutes.ts';
+import budgetRoutes from './server/routes/budgetRoutes.ts';
+import dashboardRoutes from './server/routes/dashboardRoutes.ts';
 
 async function startServer() {
   const app = express();
@@ -26,12 +25,22 @@ async function startServer() {
   const isProduction = process.env.NODE_ENV === 'production';
 
   if (!isProduction) {
-    // In development, mount Vite middleware directly
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
+    // In development, mount Vite middleware dynamically
+    try {
+      const { createServer: createViteServer } = await import('vite');
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: 'spa',
+      });
+      app.use(vite.middlewares);
+    } catch (viteErr) {
+      console.warn('Vite dev middleware not loaded, falling back to static files:', viteErr);
+      const distPath = path.resolve(process.cwd(), 'dist');
+      app.use(express.static(distPath));
+      app.get('*', (_req, res) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+      });
+    }
   } else {
     // In production, serve built static files from dist/
     const distPath = path.resolve(process.cwd(), 'dist');

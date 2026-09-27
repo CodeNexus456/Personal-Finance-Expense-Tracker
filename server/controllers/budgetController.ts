@@ -1,7 +1,7 @@
-import { Response } from 'express';
-import { Budget } from '../models/Budget.js';
-import { Transaction } from '../models/Transaction.js';
-import { AuthRequest } from '../middleware/authMiddleware.js';
+import type { Response } from 'express';
+import { Budget } from '../models/Budget.ts';
+import { Transaction } from '../models/Transaction.ts';
+import { type AuthRequest } from '../middleware/authMiddleware.ts';
 
 export const getBudgets = async (req: AuthRequest, res: Response) => {
   try {

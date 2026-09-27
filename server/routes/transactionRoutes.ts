@@ -4,12 +4,12 @@ import {
   addTransaction,
   updateTransaction,
   deleteTransaction,
-} from '../controllers/transactionController.js';
-import { protect } from '../middleware/authMiddleware.js';
+} from '../controllers/transactionController.ts';
+import { protect } from '../middleware/authMiddleware.ts';
 
 const router = Router();
 
-router.use(protect); // All transaction routes are protected
+router.use(protect);
 
 router.get('/', getTransactions);
 router.post('/', addTransaction);

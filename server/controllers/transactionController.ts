@@ -1,6 +1,6 @@
-import { Response } from 'express';
-import { Transaction } from '../models/Transaction.js';
-import { AuthRequest } from '../middleware/authMiddleware.js';
+import type { Response } from 'express';
+import { Transaction } from '../models/Transaction.ts';
+import { type AuthRequest } from '../middleware/authMiddleware.ts';
 
 export const getTransactions = async (req: AuthRequest, res: Response) => {
   try {

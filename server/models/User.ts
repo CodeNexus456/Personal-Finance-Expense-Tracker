@@ -1,4 +1,4 @@
-import { db, IUser } from '../config/db.js';
+import { db, type IUser } from '../config/db.ts';
 
 export type { IUser };
 
