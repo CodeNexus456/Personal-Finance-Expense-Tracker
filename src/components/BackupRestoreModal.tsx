@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import {
   Download,
@@ -8,7 +7,6 @@ import {
   X,
   CheckCircle,
   AlertCircle,
-  RefreshCw,
 } from 'lucide-react';
 
 interface BackupRestoreModalProps {
@@ -22,7 +20,6 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const { t, language } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ text: string; isError?: boolean } | null>(null);
 
@@ -61,11 +58,11 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
       URL.revokeObjectURL(url);
 
       setStatusMessage({
-        text: language === 'hi' ? 'बैकअप फ़ाइल डाउनलोड हो गई!' : 'Backup file downloaded successfully!',
+        text: 'Backup file downloaded successfully!',
       });
-    } catch (err: any) {
+    } catch {
       setStatusMessage({
-        text: language === 'hi' ? 'बैकअप डाउनलोड करने में विफलता' : 'Failed to export backup',
+        text: 'Failed to export backup file',
         isError: true,
       });
     } finally {
@@ -87,7 +84,7 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
 
       if (!parsed.transactions || !Array.isArray(parsed.transactions)) {
         setStatusMessage({
-          text: language === 'hi' ? 'अमान्य बैकअप फ़ाइल' : 'Invalid backup file format',
+          text: 'Invalid backup file format',
           isError: true,
         });
         setLoading(false);
@@ -108,7 +105,7 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
             description: tx.description || '',
           });
           restoredCount++;
-        } catch (e) {
+        } catch {
           // ignore single failures
         }
       }
@@ -123,21 +120,19 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
               month: bg.month,
               year: bg.year,
             });
-          } catch (e) {
+          } catch {
             // ignore
           }
         }
       }
 
       setStatusMessage({
-        text: language === 'hi'
-          ? `${restoredCount} लेन-देन सफलतापूर्वक रीस्टोर हुए!`
-          : `Restored ${restoredCount} transactions successfully!`,
+        text: `Restored ${restoredCount} transactions successfully!`,
       });
       onSuccess();
-    } catch (err: any) {
+    } catch {
       setStatusMessage({
-        text: language === 'hi' ? 'फ़ाइल पढ़ने में त्रुटि' : 'Failed to restore backup file',
+        text: 'Failed to read or parse backup file',
         isError: true,
       });
     } finally {
@@ -153,7 +148,7 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
           <div className="flex items-center space-x-2">
             <Database className="w-5 h-5 text-indigo-600" />
             <h2 className="text-base font-bold text-slate-900">
-              {language === 'hi' ? 'डेटा बैकअप एवं रीस्टोर' : 'Data Backup & Restore'}
+              Data Backup & Restore
             </h2>
           </div>
           <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-slate-600">
@@ -163,9 +158,7 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
 
         <div className="p-6 space-y-5">
           <p className="text-xs text-slate-600 leading-relaxed">
-            {language === 'hi'
-              ? 'आपका वित्तीय डेटा पूरी तरह आपका है। आप कभी भी अपना पूरा डेटा डाउनलोड कर सकते हैं या किसी अन्य डिवाइस में रीस्टोर कर सकते हैं।'
-              : 'Your financial data is 100% yours. Export a complete JSON backup anytime, or restore it onto another device with zero data loss.'}
+            Your financial data is 100% yours. Export a complete JSON backup anytime, or restore it onto another device with zero data loss.
           </p>
 
           {statusMessage && (
@@ -189,10 +182,10 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
           <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-slate-800">
-                {language === 'hi' ? 'पूरा डेटा बैकअप लें (JSON)' : 'Download Backup File'}
+                Download Backup File (JSON)
               </p>
               <p className="text-[11px] text-slate-500">
-                {language === 'hi' ? 'सभी खर्च, आय और बजट सुरक्षित रखें' : 'Saves all transactions and budgets to disk'}
+                Saves all transactions and budgets to disk
               </p>
             </div>
             <button
@@ -201,7 +194,7 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
               className="inline-flex items-center space-x-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-2xs transition-colors shrink-0"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>{language === 'hi' ? 'डाउनलोड' : 'Export'}</span>
+              <span>Export</span>
             </button>
           </div>
 
@@ -209,15 +202,15 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
           <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
             <div>
               <p className="text-xs font-bold text-slate-800">
-                {language === 'hi' ? 'बैकअप से रीस्टोर करें' : 'Restore from Backup File'}
+                Restore from Backup File
               </p>
               <p className="text-[11px] text-slate-500">
-                {language === 'hi' ? 'पहले ली गई JSON फ़ाइल अपलोड करें' : 'Upload a previously exported JSON backup'}
+                Upload a previously saved JSON backup
               </p>
             </div>
             <label className="inline-flex items-center space-x-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-2xs transition-colors shrink-0 cursor-pointer">
               <Upload className="w-3.5 h-3.5" />
-              <span>{language === 'hi' ? 'अपलोड' : 'Import'}</span>
+              <span>Import</span>
               <input
                 type="file"
                 accept=".json"
@@ -233,7 +226,7 @@ export const BackupRestoreModal: React.FC<BackupRestoreModalProps> = ({
               onClick={onClose}
               className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800"
             >
-              {language === 'hi' ? 'बंद करें' : 'Close'}
+              Close
             </button>
           </div>
         </div>

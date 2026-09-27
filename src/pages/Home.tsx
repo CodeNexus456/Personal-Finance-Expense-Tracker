@@ -10,13 +10,12 @@ import {
   Sparkles,
   ArrowUpRight,
   ArrowDownRight,
-  Smartphone,
-  WifiOff,
   Zap,
+  BarChart3,
+  CalendarCheck,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { PWAInstallButton } from '../components/PWAInstallButton';
 
 interface HomeProps {
   onNavigateToLogin: () => void;
@@ -25,7 +24,7 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegister }) => {
   const { demoLogin } = useAuth();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [demoLoading, setDemoLoading] = React.useState(false);
 
   const handleDemo = async () => {
@@ -42,35 +41,18 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3.5 py-1.5 rounded-full text-indigo-700 text-xs font-semibold mb-6">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>
-              {language === 'hi'
-                ? '📱 PWA + ऑफ़लाइन सक्षम • कभी भी, कहीं भी इस्तेमाल करें'
-                : '📱 PWA + Offline Ready • Use Anytime, Anywhere'}
-            </span>
+            <span>Effortless Daily Personal Finance & Budgeting</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            {language === 'hi' ? (
-              <>
-                अपने पैसों और खर्चों का हिसाब रखें,{' '}
-                <span className="text-indigo-600 underline decoration-indigo-200 underline-offset-8">
-                  आसानी से और कभी भी।
-                </span>
-              </>
-            ) : (
-              <>
-                Take control of your personal money,{' '}
-                <span className="text-indigo-600 underline decoration-indigo-200 underline-offset-8">
-                  anytime & everywhere.
-                </span>
-              </>
-            )}
+            Take complete control of your money,{' '}
+            <span className="text-indigo-600 underline decoration-indigo-200 underline-offset-8">
+              anytime & anywhere.
+            </span>
           </h1>
 
           <p className="mt-5 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            {language === 'hi'
-              ? 'दुकान, ऑटो या सफर में 1-टैप में खर्च दर्ज करें। बिना इंटरनेट भी काम करता है और सीधे आपके फोन की होम स्क्रीन पर ऐप की तरह इंस्टॉल हो जाता है।'
-              : 'Log daily expenses in seconds, monitor monthly budgets, and analyze spending habits even when offline. Install directly to your phone screen like a native app.'}
+            Log daily expenses in seconds, monitor monthly category budgets, and analyze spending habits with clean visual analytics.
           </p>
 
           {/* Call to Actions */}
@@ -96,18 +78,12 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
               className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-5 py-3.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-semibold text-sm transition-colors"
             >
               <Sparkles className="w-4 h-4 text-emerald-600" />
-              <span>{demoLoading ? 'Logging into Demo...' : t.tryDemo}</span>
+              <span>{demoLoading ? 'Logging into Demo...' : '1-Click Demo (Rahul)'}</span>
             </button>
           </div>
 
-          <div className="mt-4 flex items-center justify-center space-x-2">
-            <PWAInstallButton variant="navbar" />
-          </div>
-
-          <p className="mt-3 text-xs text-slate-400">
-            {language === 'hi'
-              ? 'बिना किसी परेशानी के तुरंत इस्तेमाल शुरू करें। निजी और सुरक्षित।'
-              : 'No credit card or banking credentials required. Safe, private & instant.'}
+          <p className="mt-4 text-xs text-slate-400">
+            No credit card or banking credentials required. Private, fast & secure.
           </p>
 
           {/* Live Preview Strip */}
@@ -119,9 +95,9 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
                 <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
                 <span className="text-xs text-slate-400 font-mono ml-2">fintrack.app</span>
               </div>
-              <span className="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-semibold flex items-center space-x-1">
+              <span className="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded font-semibold flex items-center space-x-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                <span>{language === 'hi' ? 'ऑफ़लाइन व ऑनलाइन तैयार' : 'Online & Offline Ready'}</span>
+                <span>Real-Time Balance & Budget Sync</span>
               </span>
             </div>
 
@@ -131,7 +107,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
                 <p className="text-2xl font-bold text-slate-900 mt-1">₹49,501</p>
                 <div className="flex items-center text-xs text-emerald-600 mt-1 font-medium">
                   <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" />
-                  <span>{language === 'hi' ? 'सकारात्मक बचत' : 'Healthy positive net'}</span>
+                  <span>Healthy positive net balance</span>
                 </div>
               </div>
 
@@ -139,7 +115,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
                 <p className="text-xs text-emerald-800 font-medium">{t.totalIncome}</p>
                 <p className="text-2xl font-bold text-emerald-700 mt-1">₹80,000</p>
                 <div className="flex items-center text-xs text-emerald-600 mt-1 font-medium">
-                  <span>{language === 'hi' ? 'वेतन + फ्रीलांसिंग' : 'Salary + Freelancing'}</span>
+                  <span>Salary + Freelancing</span>
                 </div>
               </div>
 
@@ -148,7 +124,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
                 <p className="text-2xl font-bold text-rose-700 mt-1">₹30,499</p>
                 <div className="flex items-center text-xs text-rose-600 mt-1 font-medium">
                   <ArrowDownRight className="w-3.5 h-3.5 mr-0.5" />
-                  <span>{language === 'hi' ? 'बजट के भीतर' : 'Within monthly limits'}</span>
+                  <span>Within monthly limits</span>
                 </div>
               </div>
             </div>
@@ -161,12 +137,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
-              {language === 'hi' ? 'हर रोज कभी भी इस्तेमाल के लिए खास फीचर्स' : 'Built for effortless, anytime usage'}
+              Built for seamless everyday money management
             </h2>
             <p className="mt-2 text-sm text-slate-600 max-w-xl mx-auto">
-              {language === 'hi'
-                ? 'सिर्फ एक वेबसाइट नहीं, बल्कि एक असली पॉकेट ऐप जो हमेशा आपके साथ रहता है।'
-                : 'Not just a website, but a true pocket utility ready whenever you make an expense.'}
+              Everything you need to keep your personal finances organized, transparent, and under control.
             </p>
           </div>
 
@@ -176,40 +150,34 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
                 <Zap className="w-5 h-5" />
               </div>
               <h3 className="font-semibold text-slate-900 text-base mb-1">
-                {language === 'hi' ? '1-टैप क्विक खर्चा' : '1-Tap Fast Logger'}
+                1-Tap Fast Logger
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                {language === 'hi'
-                  ? 'चाय, ऑटो, किराना जैसे रोज के खर्च सिर्फ एक क्लिक में तुरंत दर्ज करें।'
-                  : 'Log recurring chai, snacks, auto, and recharge expenses with single-click shortcuts.'}
+                Log recurring daily expenses like coffee, snacks, transit, and groceries with convenient shortcuts.
               </p>
             </div>
 
             <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xs transition-all">
               <div className="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
-                <Smartphone className="w-5 h-5" />
+                <PiggyBank className="w-5 h-5" />
               </div>
               <h3 className="font-semibold text-slate-900 text-base mb-1">
-                {language === 'hi' ? 'मोबाइल PWA ऐप' : 'Installable PWA'}
+                Monthly Budgets
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                {language === 'hi'
-                  ? 'बिना प्ले स्टोर के सीधे फोन स्क्रीन पर इंस्टॉल करें। तेज और हल्का।'
-                  : 'Install directly to Android or iOS home screens without app store downloads.'}
+                Set category spending targets and receive early alerts before exceeding your budget limits.
               </p>
             </div>
 
             <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xs transition-all">
               <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center mb-3">
-                <WifiOff className="w-5 h-5" />
+                <BarChart3 className="w-5 h-5" />
               </div>
               <h3 className="font-semibold text-slate-900 text-base mb-1">
-                {language === 'hi' ? 'ऑफ़लाइन मोड' : 'Offline Persistence'}
+                Visual Analytics
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                {language === 'hi'
-                  ? 'नेटवर्क ना होने पर भी ऐप खुलेगा और खर्च फोन में सुरक्षित रहेगा।'
-                  : 'No internet connection? FinTrack keeps working smoothly using local storage.'}
+                Analyze income vs expenses trends over the past 6 months alongside category breakdown percentages.
               </p>
             </div>
 
@@ -218,12 +186,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="font-semibold text-slate-900 text-base mb-1">
-                {language === 'hi' ? 'डेटा बैकअप व गोपनीयता' : 'Backup & Privacy'}
+                Backup & Privacy
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                {language === 'hi'
-                  ? 'अपना पूरा डेटा कभी भी JSON/CSV में डाउनलोड करें और दूसरे फोन में डालें।'
-                  : 'Export complete JSON backups and CSV sheets anytime for 100% data ownership.'}
+                Export complete JSON backups and CSV sheets anytime for total ownership of your financial records.
               </p>
             </div>
           </div>
@@ -239,13 +205,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigateToLogin, onNavigateToRegis
             <span>&copy; {new Date().getFullYear()}</span>
           </div>
           <div className="flex items-center space-x-4">
-            <span>PWA & Offline Ready</span>
+            <span>Fast & Responsive</span>
             <span>&bull;</span>
             <span>Node.js / Express</span>
             <span>&bull;</span>
             <span>JWT & Bcrypt</span>
             <span>&bull;</span>
-            <span>Bilingual (EN / हिंदी)</span>
+            <span>Data Ownership</span>
           </div>
         </div>
       </footer>

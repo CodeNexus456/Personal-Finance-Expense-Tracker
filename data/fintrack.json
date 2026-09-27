@@ -6,6 +6,13 @@
       "email": "demo@fintrack.app",
       "password": "$2b$10$sPloqws/rUGCCRCjtNyAU.Mz4GZ7lzOOpcR0Q2ffXggzrLIFUh0kG",
       "createdAt": "2026-08-27T11:35:25.735Z"
+    },
+    {
+      "_id": "usr_973f11b655fc483b",
+      "name": "Aman Gupta",
+      "email": "aman@example.com",
+      "password": "$2b$10$7w1qe21gSnWjfMi5XidXUegcLmdns/x6Iy3DGUuT6LSe.1bNJ20ci",
+      "createdAt": "2026-09-27T20:19:56.347Z"
     }
   ],
   "transactions": [

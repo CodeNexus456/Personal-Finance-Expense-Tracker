@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { PWAInstallButton } from './PWAInstallButton';
 import {
   Wallet,
   LayoutDashboard,
@@ -10,7 +9,6 @@ import {
   LogOut,
   Menu,
   X,
-  Languages,
   Database,
 } from 'lucide-react';
 
@@ -28,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenBackupModal,
 }) => {
   const { user, logout } = useAuth();
-  const { t, language, toggleLanguage } = useLanguage();
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNav = (tab: 'home' | 'dashboard' | 'transactions' | 'budgets') => {
@@ -50,8 +48,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             <div>
               <span className="text-xl font-bold text-slate-900 tracking-tight">FinTrack</span>
-              <span className="hidden sm:inline-block ml-2 text-xs font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-200">
-                {language === 'hi' ? 'खर्च ट्रैकर' : 'Daily Expense Tracker'}
+              <span className="hidden sm:inline-block ml-2 text-xs font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
+                Expense & Budget Tracker
               </span>
             </div>
           </div>
@@ -99,25 +97,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Desktop Right Side Actions */}
           <div className="hidden md:flex items-center space-x-2.5">
-            {/* Language Switcher */}
-            <button
-              onClick={toggleLanguage}
-              title={language === 'en' ? 'Switch to Hindi (हिंदी)' : 'Switch to English'}
-              className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors"
-            >
-              <Languages className="w-3.5 h-3.5 text-indigo-600" />
-              <span>{language === 'en' ? 'हिंदी' : 'English'}</span>
-            </button>
-
-            {/* In-App PWA Install Button */}
-            <PWAInstallButton variant="navbar" />
-
             {user ? (
               <>
                 {onOpenBackupModal && (
                   <button
                     onClick={onOpenBackupModal}
-                    title={language === 'hi' ? 'डेटा बैकअप लें या रीस्टोर करें' : 'Backup or restore data'}
+                    title="Backup or restore data"
                     className="p-2 text-slate-500 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-colors"
                   >
                     <Database className="w-4 h-4" />
@@ -176,18 +161,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* Mobile top bar right buttons */}
+          {/* Mobile top bar right button */}
           <div className="flex items-center space-x-2 md:hidden">
-            {/* Language toggle for mobile */}
-            <button
-              onClick={toggleLanguage}
-              className="px-2 py-1 rounded-md text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700"
-            >
-              {language === 'en' ? 'हिंदी' : 'EN'}
-            </button>
-
-            <PWAInstallButton variant="navbar" />
-
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
@@ -271,7 +246,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100"
                 >
                   <Database className="w-5 h-5" />
-                  <span>{t.backupData} / {t.restoreData}</span>
+                  <span>Backup & Restore Data</span>
                 </button>
               )}
 

@@ -32,7 +32,7 @@ export const Transactions: React.FC<TransactionsProps> = ({
   refreshTrigger,
   onRefreshNeeded,
 }) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

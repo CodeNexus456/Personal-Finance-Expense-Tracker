@@ -9,8 +9,6 @@ import {
   Utensils,
   Plus,
   Check,
-  Smartphone,
-  Sparkles,
 } from 'lucide-react';
 
 interface QuickAddStripProps {
@@ -18,18 +16,18 @@ interface QuickAddStripProps {
 }
 
 export const QuickAddStrip: React.FC<QuickAddStripProps> = ({ onSuccess }) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [customTitle, setCustomTitle] = useState('');
   const [customAmount, setCustomAmount] = useState('');
   const [loading, setLoading] = useState(false);
   const [successNotice, setSuccessNotice] = useState<string | null>(null);
 
   const presets = [
-    { title: language === 'hi' ? 'चाय / कॉफी' : 'Chai / Coffee', amount: 20, category: 'Food', icon: <Coffee className="w-3.5 h-3.5 text-amber-600" />, method: 'UPI' },
-    { title: language === 'hi' ? 'नाश्ता / स्नैक्स' : 'Snacks / Breakfast', amount: 60, category: 'Food', icon: <Utensils className="w-3.5 h-3.5 text-orange-600" />, method: 'UPI' },
-    { title: language === 'hi' ? 'ऑटो / मेट्रो' : 'Auto / Metro', amount: 50, category: 'Transport', icon: <Car className="w-3.5 h-3.5 text-blue-600" />, method: 'UPI' },
-    { title: language === 'hi' ? 'राशन / सब्जी' : 'Veggies / Grocery', amount: 150, category: 'Food', icon: <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />, method: 'UPI' },
-    { title: language === 'hi' ? 'मोबाइल रिचार्ज' : 'Phone Recharge', amount: 299, category: 'Bills', icon: <Zap className="w-3.5 h-3.5 text-purple-600" />, method: 'UPI' },
+    { title: 'Chai / Coffee', amount: 20, category: 'Food', icon: <Coffee className="w-3.5 h-3.5 text-amber-600" />, method: 'UPI' },
+    { title: 'Snacks / Breakfast', amount: 60, category: 'Food', icon: <Utensils className="w-3.5 h-3.5 text-orange-600" />, method: 'UPI' },
+    { title: 'Cab / Metro', amount: 50, category: 'Transport', icon: <Car className="w-3.5 h-3.5 text-blue-600" />, method: 'UPI' },
+    { title: 'Groceries', amount: 150, category: 'Food', icon: <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />, method: 'UPI' },
+    { title: 'Phone Recharge', amount: 299, category: 'Bills', icon: <Zap className="w-3.5 h-3.5 text-purple-600" />, method: 'UPI' },
   ];
 
   const handleQuickAdd = async (title: string, amount: number, category: string, method: string) => {
@@ -43,16 +41,16 @@ export const QuickAddStrip: React.FC<QuickAddStripProps> = ({ onSuccess }) => {
         category,
         date: today,
         paymentMethod: method,
-        description: '1-Tap Quick Kharcha',
+        description: '1-Tap Quick Expense',
       });
 
-      setSuccessNotice(`✓ ${title} (₹${amount}) ${language === 'hi' ? 'जुड़ गया!' : 'added!'}`);
+      setSuccessNotice(`✓ ${title} (₹${amount}) added!`);
       onSuccess();
 
       setTimeout(() => {
         setSuccessNotice(null);
       }, 3000);
-    } catch (err: any) {
+    } catch {
       alert('Error recording quick expense');
     } finally {
       setLoading(false);
@@ -113,7 +111,7 @@ export const QuickAddStrip: React.FC<QuickAddStripProps> = ({ onSuccess }) => {
           type="text"
           value={customTitle}
           onChange={(e) => setCustomTitle(e.target.value)}
-          placeholder={language === 'hi' ? 'खर्च का नाम (उदा. दूध, चाय, नाश्ता...)' : 'Quick note (e.g. Milk, Lunch, Cab...)'}
+          placeholder="Quick note (e.g. Milk, Lunch, Cab, Coffee...)"
           className="flex-1 px-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 bg-slate-50/50"
         />
         <div className="relative w-28 shrink-0">
@@ -133,7 +131,7 @@ export const QuickAddStrip: React.FC<QuickAddStripProps> = ({ onSuccess }) => {
           className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold rounded-lg shadow-2xs transition-colors shrink-0 flex items-center space-x-1"
         >
           <Plus className="w-3.5 h-3.5" />
-          <span>{language === 'hi' ? 'जोड़ें' : 'Add'}</span>
+          <span>Add</span>
         </button>
       </form>
     </div>

@@ -1,11 +1,9 @@
 import React from 'react';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
-import { useLanguage } from '../context/LanguageContext';
-import { WifiOff, ShieldCheck } from 'lucide-react';
+import { WifiOff } from 'lucide-react';
 
 export const OfflineIndicator: React.FC = () => {
   const isOnline = useOnlineStatus();
-  const { language } = useLanguage();
 
   if (isOnline) return null;
 
@@ -14,9 +12,7 @@ export const OfflineIndicator: React.FC = () => {
       <div className="flex items-center space-x-2">
         <WifiOff className="w-4 h-4 shrink-0" />
         <span>
-          {language === 'hi'
-            ? 'ऑफ़लाइन मोड: इंटरनेट नहीं है, फिर भी आप खर्च जोड़ सकते हैं। डेटा फोन में सुरक्षित रहेगा।'
-            : 'Offline Mode: No connection. You can still add expenses safely; data is stored locally.'}
+          Offline Mode: No connection. You can still add and manage expenses; changes are stored locally.
         </span>
       </div>
     </div>

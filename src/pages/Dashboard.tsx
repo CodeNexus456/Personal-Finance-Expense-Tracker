@@ -4,7 +4,6 @@ import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import { formatCurrency, formatDate, getCategoryColor } from '../utils/formatters';
 import { QuickAddStrip } from '../components/QuickAddStrip';
-import { PWAInstallButton } from '../components/PWAInstallButton';
 import {
   TrendingUp,
   TrendingDown,
@@ -13,7 +12,6 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   ArrowRight,
-  Calendar,
   PiggyBank,
   AlertTriangle,
   Receipt,
@@ -21,7 +19,6 @@ import {
   Banknote,
   Smartphone,
   ChevronRight,
-  Sparkles,
 } from 'lucide-react';
 
 interface DashboardStats {
@@ -81,7 +78,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   refreshTrigger,
 }) => {
   const { user } = useAuth();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -94,7 +91,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
       setStats(res.data);
     } catch (err: any) {
       console.error('Error fetching dashboard stats:', err);
-      // If demo user and network error, provide instant pre-seeded stats
+      // Fallback if network or cold-start
       if (user?.email === 'demo@fintrack.app') {
         const now = new Date();
         const currentYear = now.getFullYear();
@@ -166,7 +163,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         <div className="flex flex-col items-center justify-center py-20 space-y-4">
           <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
           <p className="text-slate-500 font-medium text-sm">
-            {language === 'hi' ? 'डैशबोर्ड लोड हो रहा है...' : 'Loading your financial dashboard...'}
+            Loading your financial dashboard...
           </p>
         </div>
       </div>
@@ -182,7 +179,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             onClick={fetchStats}
             className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-semibold transition-colors"
           >
-            {language === 'hi' ? 'पुनः प्रयास करें' : 'Retry Loading'}
+            Retry Loading
           </button>
         </div>
       </div>
@@ -211,9 +208,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             {t.welcomeBack}, {user?.name?.split(' ')[0] || 'Friend'} 👋
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            {language === 'hi'
-              ? 'यहाँ आपका वित्तीय सारांश और बजट की स्थिति उपलब्ध है।'
-              : 'Here is your real-time financial overview and monthly budget status.'}
+            Here is your real-time financial overview and monthly budget status.
           </p>
         </div>
 
@@ -236,10 +231,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
-      {/* PWA Mobile Prompt Banner (Optional / Auto-suppressed if installed) */}
-      <PWAInstallButton variant="banner" />
-
-      {/* ⚡ 1-Tap Quick Kharcha Logger */}
+      {/* ⚡ 1-Tap Quick Expense Logger */}
       <QuickAddStrip onSuccess={fetchStats} />
 
       {/* Top 3 Summary Cards */}
@@ -264,7 +256,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </h2>
           </div>
           <div className="mt-3 flex items-center text-xs font-medium text-slate-500">
-            <span>{language === 'hi' ? 'कुल बचत (आय - खर्च)' : 'Overall net balance across all records'}</span>
+            <span>Overall net balance across all records</span>
           </div>
         </div>
 
@@ -285,7 +277,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
           <div className="mt-3 flex items-center text-xs text-emerald-600 font-medium">
             <ArrowUpRight className="w-4 h-4 mr-0.5" />
-            <span>{language === 'hi' ? 'वेतन, फ्रीलांसिंग एवं अन्य आय' : 'Earnings, salary & freelancing'}</span>
+            <span>Earnings, salary & freelancing</span>
           </div>
         </div>
 
@@ -306,7 +298,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
           <div className="mt-3 flex items-center text-xs text-rose-600 font-medium">
             <ArrowDownRight className="w-4 h-4 mr-0.5" />
-            <span>{language === 'hi' ? 'कुल हुआ खर्च' : 'All outgoing spending'}</span>
+            <span>All outgoing spending</span>
           </div>
         </div>
       </div>
@@ -318,9 +310,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div>
               <h2 className="text-base font-bold text-slate-900">{t.monthlyBudgetStatus}</h2>
               <p className="text-xs text-slate-500">
-                {language === 'hi'
-                  ? 'आपके मासिक खर्च की सीमा और वास्तविक खर्च'
-                  : 'Tracking spending against your monthly category caps'}
+                Tracking spending against your monthly category caps
               </p>
             </div>
             <button
@@ -402,7 +392,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div>
                 <h2 className="text-base font-bold text-slate-900">{t.incomeVsExpense}</h2>
                 <p className="text-xs text-slate-500">
-                  {language === 'hi' ? 'पिछले 6 महीनों का ऐतिहासिक तुलनात्मक रिकॉर्ड' : 'Monthly breakdown over the last 6 months'}
+                  Monthly breakdown over the last 6 months
                 </p>
               </div>
               <div className="flex items-center space-x-3 text-xs">
@@ -458,8 +448,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>{language === 'hi' ? 'आपके लेन-देन से स्वतः गणना' : 'Data synced from your transactions'}</span>
-            <span className="font-bold text-slate-700">Auto-calculated</span>
+            <span>Data calculated from your recorded transactions</span>
+            <span className="font-bold text-slate-700">Auto-synced</span>
           </div>
         </div>
 
@@ -470,7 +460,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div>
                 <h2 className="text-base font-bold text-slate-900">{t.expenseByCategory}</h2>
                 <p className="text-xs text-slate-500">
-                  {language === 'hi' ? 'कुल खर्च का श्रेणीवार वितरण' : 'Distribution of your total spending'}
+                  Distribution of your total spending
                 </p>
               </div>
             </div>
@@ -512,7 +502,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           </div>
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>{language === 'hi' ? 'कुल श्रेणियां:' : 'Total Categories:'} {categoryExpenses.length}</span>
+            <span>Total Categories: {categoryExpenses.length}</span>
             <button
               onClick={onNavigateToTransactions}
               className="text-indigo-600 hover:text-indigo-800 font-bold flex items-center space-x-1"
@@ -530,7 +520,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div>
             <h2 className="text-base font-bold text-slate-900">{t.recentTransactions}</h2>
             <p className="text-xs text-slate-500">
-              {language === 'hi' ? 'आपके हालिया खर्च और आमदनी' : 'Your latest income and expense entries'}
+              Your latest income and expense entries
             </p>
           </div>
           <button

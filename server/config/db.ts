@@ -3,7 +3,8 @@ import path from 'path';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
-const DATA_DIR = path.resolve(process.cwd(), 'data');
+const isVercel = !!process.env.VERCEL;
+const DATA_DIR = isVercel ? '/tmp/fintrack-data' : path.resolve(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'fintrack.json');
 
 export interface IUser {
@@ -236,23 +237,34 @@ class JsonDatabase {
   private inMemoryData: DatabaseSchema | null = null;
 
   private init() {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-    if (!fs.existsSync(DB_FILE)) {
-      const initial = getInitialData();
-      fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
-      this.inMemoryData = initial;
-    } else {
-      try {
-        const raw = fs.readFileSync(DB_FILE, 'utf-8');
-        this.inMemoryData = JSON.parse(raw);
-      } catch (err) {
-        console.error('Error reading db file, restoring fallback:', err);
-        const initial = getInitialData();
-        fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
-        this.inMemoryData = initial;
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
       }
+      if (!fs.existsSync(DB_FILE)) {
+        const initial = getInitialData();
+        try {
+          fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
+        } catch (writeErr) {
+          console.warn('Filesystem read-only (e.g. Vercel), operating in-memory:', writeErr);
+        }
+        this.inMemoryData = initial;
+      } else {
+        try {
+          const raw = fs.readFileSync(DB_FILE, 'utf-8');
+          this.inMemoryData = JSON.parse(raw);
+        } catch (err) {
+          console.error('Error reading db file, restoring fallback:', err);
+          const initial = getInitialData();
+          try {
+            fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf-8');
+          } catch {}
+          this.inMemoryData = initial;
+        }
+      }
+    } catch (fsErr) {
+      console.warn('Could not initialize disk DB, using in-memory fallback:', fsErr);
+      this.inMemoryData = getInitialData();
     }
   }
 
@@ -266,9 +278,13 @@ class JsonDatabase {
   private saveData() {
     if (this.inMemoryData) {
       try {
+        if (!fs.existsSync(DATA_DIR)) {
+          fs.mkdirSync(DATA_DIR, { recursive: true });
+        }
         fs.writeFileSync(DB_FILE, JSON.stringify(this.inMemoryData, null, 2), 'utf-8');
       } catch (err) {
-        console.error('Error saving db file:', err);
+        // Read-only filesystem like Vercel serverless /var/task - silently continue in-memory
+        console.warn('Could not persist to disk, maintained in-memory:', (err as any)?.message);
       }
     }
   }

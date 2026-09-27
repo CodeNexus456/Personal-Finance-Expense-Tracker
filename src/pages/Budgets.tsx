@@ -27,7 +27,7 @@ export const Budgets: React.FC<BudgetsProps> = ({
   refreshTrigger,
   onRefreshNeeded,
 }) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const now = new Date();
   const [selectedMonth, setSelectedMonth] = useState<number>(now.getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState<number>(now.getFullYear());
