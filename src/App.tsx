@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
+import { MobileBottomNav } from './components/MobileBottomNav';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -9,6 +12,7 @@ import { Transactions } from './pages/Transactions';
 import { Budgets } from './pages/Budgets';
 import { TransactionModal, TransactionData } from './components/TransactionModal';
 import { BudgetModal, BudgetData } from './components/BudgetModal';
+import { BackupRestoreModal } from './components/BackupRestoreModal';
 
 function MainApp() {
   const { user, loading } = useAuth();
@@ -35,6 +39,8 @@ function MainApp() {
 
   const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
   const [editingBudget, setEditingBudget] = useState<BudgetData | null>(null);
+
+  const [isBackupModalOpen, setIsBackupModalOpen] = useState(false);
 
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
@@ -70,6 +76,9 @@ function MainApp() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900 selection:bg-indigo-500 selection:text-white">
+      {/* Offline Status Badge */}
+      <OfflineIndicator />
+
       {/* Navigation */}
       <Navbar
         currentTab={currentTab === 'login' || currentTab === 'register' ? 'home' : (currentTab as any)}
@@ -81,10 +90,11 @@ function MainApp() {
           }
         }}
         onOpenAddModal={user ? handleOpenAddTx : undefined}
+        onOpenBackupModal={user ? () => setIsBackupModalOpen(true) : undefined}
       />
 
       {/* Main Content Area */}
-      <main className="flex-1">
+      <main className="flex-1 pb-16 md:pb-0">
         {currentTab === 'home' && (
           <Home
             onNavigateToLogin={() => setCurrentTab('login')}
@@ -134,6 +144,16 @@ function MainApp() {
         )}
       </main>
 
+      {/* Mobile Bottom Navigation Bar (Phone layout) */}
+      {user && (
+        <MobileBottomNav
+          currentTab={currentTab as any}
+          onNavigate={(tab) => setCurrentTab(tab)}
+          onOpenAddModal={handleOpenAddTx}
+          onOpenBackupModal={() => setIsBackupModalOpen(true)}
+        />
+      )}
+
       {/* Modals */}
       <TransactionModal
         isOpen={isTxModalOpen}
@@ -148,6 +168,12 @@ function MainApp() {
         onSuccess={handleRefresh}
         initialData={editingBudget}
       />
+
+      <BackupRestoreModal
+        isOpen={isBackupModalOpen}
+        onClose={() => setIsBackupModalOpen(false)}
+        onSuccess={handleRefresh}
+      />
     </div>
   );
 }
@@ -155,7 +181,9 @@ function MainApp() {
 export default function App() {
   return (
     <AuthProvider>
-      <MainApp />
+      <LanguageProvider>
+        <MainApp />
+      </LanguageProvider>
     </AuthProvider>
   );
 }

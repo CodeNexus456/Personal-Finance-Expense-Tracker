@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 import { formatCurrency, getCategoryColor } from '../utils/formatters';
 import {
   PiggyBank,
@@ -26,6 +27,7 @@ export const Budgets: React.FC<BudgetsProps> = ({
   refreshTrigger,
   onRefreshNeeded,
 }) => {
+  const { t, language } = useLanguage();
   const now = new Date();
   const [selectedMonth, setSelectedMonth] = useState<number>(now.getMonth() + 1);
   const [selectedYear, setSelectedYear] = useState<number>(now.getFullYear());
